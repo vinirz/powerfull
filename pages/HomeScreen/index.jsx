@@ -121,7 +121,7 @@ export default function HomeScreen({ navigation }) {
         <S.NewButton onPress={() => setShowModal(!showModal)}>
           <S.SubtitleText>Novo</S.SubtitleText>
         </S.NewButton>
-        <S.SubtitleText onPress={() => navigation.navigate('Map')}>Encontrar academias</S.SubtitleText>
+        <S.SubtitleText onPress={() => navigation.navigate('Map')}>Iniciar Corrida</S.SubtitleText>
       </S.ModalContainer>
 
       <DraggableModal isVisible={showModal} setIsVisible={setShowModal}>
