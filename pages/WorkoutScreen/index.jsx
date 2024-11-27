@@ -91,6 +91,20 @@ export default function WorkoutScreen({ navigation, route }) {
     setShowModal(false);
   }
 
+  async function generateRandomWorkout() {
+    const response = await WorkoutService.createRandomWorkout(route.params?.item.id);
+
+    if (response.error) {
+      Alert.alert(
+        'Erro ao criar o exercício',
+        'Ocorreu um erro ao criar o exercício, tente novamente'
+      );
+      return;
+    }
+
+    setExercises(response.data);
+  }
+
   return (
     <S.Container>
       <S.WellcomeContainer>
@@ -128,6 +142,10 @@ export default function WorkoutScreen({ navigation, route }) {
       <S.NewButton onPress={() => setShowModal(!showModal)}>
         <Feather name='plus' size={40} color='white' />
       </S.NewButton>
+      
+      <S.RandomButton onPress={() => generateRandomWorkout()}>
+        <Feather name='loader' size={20} color='white' />
+      </S.RandomButton>
 
       <DraggableModal isVisible={showModal} setIsVisible={setShowModal}>
         <S.ModalContainer>
@@ -195,6 +213,9 @@ export default function WorkoutScreen({ navigation, route }) {
               defaultValue={selectedExercise?.load}
             ></S.ModalInput>
           </S.ModalRow>
+          <S.DescriptionContainer>
+            <S.DescriptionText>{selectedExercise?.description}</S.DescriptionText>
+          </S.DescriptionContainer>
           <S.SubmitFormButton
             onPress={() => {
               if (selectedExercise) {

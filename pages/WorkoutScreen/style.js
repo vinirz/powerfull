@@ -56,6 +56,18 @@ export const NewButton = styled.TouchableOpacity`
   justify-content: center;
 `;
 
+export const RandomButton = styled.TouchableOpacity`
+  width: 10%;
+  aspect-ratio: 1/1;
+  border-radius: 999px;
+  background-color: #9e00ff;
+  position: absolute;
+  bottom: 120px;
+  right: 30px;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const FormField = styled.TextInput`
   height: 50px;
   width: 100%;
@@ -118,4 +130,25 @@ export const RemoveFormButton = styled.TouchableOpacity`
   overflow: hidden;
   align-items: center;
   justify-content: center;
+`;
+
+export const DescriptionContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  width: 100%;
+  overflow: auto;
+  max-height: 73px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: 15px 0;
+`;
+
+export const DescriptionText = styled.View`
+  color: #808080;
+  font-size: 15px;
+  width: 100%;
+  font-family: monospace;
 `;

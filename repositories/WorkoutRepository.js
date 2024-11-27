@@ -69,6 +69,11 @@ class WorkoutRepository {
 
     return response;
   }
+
+  async createManyExercises(exercises) {
+    const response = await supabase.from('exercises').insert(exercises);
+    return response;
+  }
 }
 
 export default new WorkoutRepository();

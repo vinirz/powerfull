@@ -1,6 +1,8 @@
+import axios from 'axios';
 import WorkoutRepository from '../../repositories/WorkoutRepository';
 import AuthService from '../AuthService';
 import Logger from '../LoggerService';
+import sanitizeHtml from 'sanitize-html'
 
 const logger = new Logger('WorkoutService');
 
@@ -254,6 +256,43 @@ class WorkoutService {
     }
   }
 
+  async createRandomWorkout(workoutId) {
+    try {
+      const randomWorkout = await this.#getRandomExercises(10, workoutId)
+
+      const currentWorkoutExercises = await this.getExercises(workoutId);
+
+      currentWorkoutExercises.data.forEach(async (exercise) => {
+        await this.deleteExercise(exercise.id);
+      });
+
+      const createdExercise = await WorkoutRepository.createManyExercises(randomWorkout);
+
+      if (createdExercise.error) {
+        logger.error({
+          log: 'Erro ao criar o exercícios',
+          description: createdExercise.error.message,
+        });
+
+        return this.#formatResponse(createdExercise);
+      }
+
+      const currentExercises = await this.getExercises(workoutId);
+
+      return this.#formatResponse(currentExercises);
+    } catch (error) {
+      logger.error({
+        log: 'Erro ao criar o exercícios',
+        description: error.message,
+        isCritical: true,
+      });
+
+      return this.#formatResponse({
+        error: 'Erro inesperado ao criar exercício. Tente novamente',
+      });
+    }
+  }
+
   async #getUser() {
     try {
       const { user } = await AuthService.retrieveSession();
@@ -291,6 +330,47 @@ class WorkoutService {
     }
 
     return responseObject;
+  }
+
+  async #getRandomExercises(amount, workoutId) {
+    const response = await axios.get('https://wger.de/api/v2/exercise/?language=7&limit=999')
+    const exercises = response.data.results
+    const workout = []
+
+    for (let i = 0; i < amount; i++) {
+      const randomIndex = Math.floor(Math.random() * exercises.length);
+      const randomExercise = exercises[randomIndex];
+      const exercise = {
+        title: randomExercise.name,
+        description: sanitizeHtml(randomExercise.description, {
+          allowedTags: [],
+          allowedAttributes: {}
+        }),
+        machine: this.#generateNumbers(10, 20),
+        load:  this.#generateNumbers(1, 50),
+        series: this.#generateNumbers(1, 5),
+        reps: this.#generateNumbers(1, 15),
+        workout_id: workoutId,
+        time: 60,
+      }
+
+      workout.push(exercise)
+    }
+
+    console.log(workout[1].description)
+    console.log(sanitizeHtml(workout[1].description, {
+      allowedTags: [],
+      allowedAttributes: {}
+    }))
+    return workout
+  }
+
+  #generateNumbers(start, end) {
+    const numbers = [];
+    for (let i = start; i <= end; i++) {
+      numbers.push(i);
+    }
+    return numbers[Math.floor(Math.random() * numbers.length)];
   }
 }
 
