@@ -106,3 +106,11 @@ export const RemoveFormButton = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
 `;
+
+export const ModalContainer = styled.View`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  width: 100%;
+`;

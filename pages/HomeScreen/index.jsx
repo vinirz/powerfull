@@ -117,9 +117,12 @@ export default function HomeScreen({ navigation }) {
         )}
       </S.WorkoutList>
 
-      <S.NewButton onPress={() => setShowModal(!showModal)}>
-        <S.SubtitleText>Novo</S.SubtitleText>
-      </S.NewButton>
+      <S.ModalContainer>
+        <S.NewButton onPress={() => setShowModal(!showModal)}>
+          <S.SubtitleText>Novo</S.SubtitleText>
+        </S.NewButton>
+        <S.SubtitleText onPress={() => navigation.navigate('Map')}>Encontrar academias</S.SubtitleText>
+      </S.ModalContainer>
 
       <DraggableModal isVisible={showModal} setIsVisible={setShowModal}>
         <S.FormField

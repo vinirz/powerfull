@@ -356,12 +356,7 @@ class WorkoutService {
 
       workout.push(exercise)
     }
-
-    console.log(workout[1].description)
-    console.log(sanitizeHtml(workout[1].description, {
-      allowedTags: [],
-      allowedAttributes: {}
-    }))
+    
     return workout
   }
 

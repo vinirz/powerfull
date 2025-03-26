@@ -143,9 +143,9 @@ export default function WorkoutScreen({ navigation, route }) {
         <Feather name='plus' size={40} color='white' />
       </S.NewButton>
       
-      <S.RandomButton onPress={() => generateRandomWorkout()}>
+      {/* <S.RandomButton onPress={() => generateRandomWorkout()}>
         <Feather name='loader' size={20} color='white' />
-      </S.RandomButton>
+      </S.RandomButton> */}
 
       <DraggableModal isVisible={showModal} setIsVisible={setShowModal}>
         <S.ModalContainer>

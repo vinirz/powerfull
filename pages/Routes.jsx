@@ -12,6 +12,7 @@ import WorkoutScreen from './WorkoutScreen';
 
 import { SessionContext } from '../contexts/SessionContext';
 import { useContext } from 'react';
+import MapScreen from './MapScreen';
 
 export default function Routes() {
   const { loading, user } = useContext(SessionContext);
@@ -34,6 +35,10 @@ export default function Routes() {
         <Stack.Screen
           name='Workout'
           component={user ? WorkoutScreen : LoginScreen}
+        />
+        <Stack.Screen
+          name='Map'
+          component={user ? MapScreen : LoginScreen}
         />
         <Stack.Screen
           name='RecoveryPassword'
